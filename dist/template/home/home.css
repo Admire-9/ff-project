@@ -7,4 +7,7 @@ body.temp {
   display: flex;
   justify-content: space-around;
 }
+body.test {
+  color: red;
+}
 

@@ -86,30 +86,22 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _less_ffpage_less__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _less_ffpage_less__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_less_ffpage_less__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+/* harmony import */ var _index_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9);
 
 
-var _ffpage = __webpack_require__(1);
 
-var _ffpage2 = _interopRequireDefault(_ffpage);
-
-var _vue = __webpack_require__(3);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _index = __webpack_require__(9);
-
-var _index2 = _interopRequireDefault(_index);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-new _vue2.default({
-    el: "#app",
-    render: function render(h) {
-        return h(_index2.default);
-    }
+new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
+  el: "#app",
+  render: function render(h) {
+    return h(_index_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  }
 });
 
 /***/ }),

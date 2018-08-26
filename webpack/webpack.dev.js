@@ -6,7 +6,6 @@ const webpack = require("webpack");
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-
 const getEntries = function() {
     let globPath = "template/**/*.vue";
     let pathDir = "template(\/|\\\\)(.*?)";
@@ -64,8 +63,8 @@ let config = {
                 use: {
                     loader: "babel-loader",
                     options: {
-                        presets: ["env"],
-                        plugins: ['transform-runtime']
+                        presets: ["@babel/preset-env"],
+                        plugins: ["@babel/plugin-transform-runtime"]
                     }
                 }
             }
