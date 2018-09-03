@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development node server", // node_modules\.bin\webpack --env=dev
+    "dev": "cross-env NODE_ENV=development node server",
     "build": "webpack --env=prod"
   },
   "keywords": [
@@ -37,7 +37,6 @@
     "koa-logger": "^3.2.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.1.4",
-    "koa-webpack": "^5.1.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.2",
@@ -49,8 +48,7 @@
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-middleware": "^3.2.0",
-    "webpack-hot-client": "^4.1.1"
+    "webpack-serve": "^2.0.2"
   },
   "dependencies": {}
 }

@@ -27,9 +27,9 @@ function addEntries() {
 }
 
 let config = {
-    "mode": "none",
-    "entry": addEntries(),
-    "output": {
+    mode: "development",
+    entry: addEntries(),
+    output: {
         filename: "[name]/[name].js",
         path: path.resolve(__dirname, "../dist/template/")
     },
@@ -80,7 +80,14 @@ let config = {
             'Promise': 'bluebird'
         }),
         new ProgressBarPlugin()
-    ]
+    ],
+    serve: {
+        content: [path.resolve(__dirname, "../dist/template/")],
+        add: (app) => {
+            console.log("in");
+        },
+        port: "3002"
+    }
 };
 
 getEntries().forEach(pathname => {
