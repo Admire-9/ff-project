@@ -3,7 +3,7 @@ const glob = require("glob");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const webpack = require("webpack");
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const getEntries = function() {
@@ -36,6 +36,10 @@ let config = {
     module: {
         rules: [
             {
+                test: /\.vue$/,
+                loader: "vue-loader"
+            },
+            {
                 test: /\.(le|c)ss$/,
                 use: [
                     MiniCssExtractPlugin.loader, //"style-loader"
@@ -51,11 +55,7 @@ let config = {
                 ]
             },
             {
-                test: /\.vue/,
-                use: "vue-loader"
-            },
-            {
-                test: /\.js/,
+                test: /\.js$/,
                 exclude: file => (
                     /node_modules|bower_components/.test(file) &&
                     !/\.vue\.js/.test(file)
@@ -81,8 +81,11 @@ let config = {
         }),
         new ProgressBarPlugin()
     ],
+    resolve: {
+        extensions: ['.js', '.vue']
+    },
     serve: {
-        content: [path.resolve(__dirname, "../dist/template/")],
+        content: [path.resolve(__dirname, "../dist/")],
         add: (app) => {
             console.log("in");
         },
