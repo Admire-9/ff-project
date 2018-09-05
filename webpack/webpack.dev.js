@@ -1,5 +1,7 @@
 const path = require("path");
 const glob = require("glob");
+const convert = require("koa-connect");
+const proxy = require('http-proxy-middleware');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const webpack = require("webpack");
@@ -31,7 +33,8 @@ let config = {
     entry: addEntries(),
     output: {
         filename: "[name]/[name].js",
-        path: path.resolve(__dirname, "../dist/template/")
+        path: path.resolve(__dirname, "../dist/template/"),
+        publicPath: "/"
     },
     module: {
         rules: [
@@ -85,10 +88,11 @@ let config = {
         extensions: ['.js', '.vue']
     },
     serve: {
-        content: [path.resolve(__dirname, "../dist/")],
+        content: [path.resolve(__dirname, "../dist/template")],
         add: (app) => {
-            console.log("in");
+            app.use(convert(proxy('/', { target: 'http://localhost:8090' })));
         },
+        hotClient: true,
         port: "3002"
     }
 };
