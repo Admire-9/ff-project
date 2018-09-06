@@ -1,5 +1,7 @@
 const path = require("path");
 const glob = require("glob");
+const convert = require("koa-connect");
+const proxy = require('http-proxy-middleware');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const webpack = require("webpack");
@@ -26,12 +28,24 @@ function addEntries() {
     return entryObj;
 }
 
+function addServeContent() {
+    let content = [];
+    getEntries().forEach(item => {
+        content.push(path.resolve(__dirname, "../dist/template", item));
+    });
+    console.log(content, "content");
+    return content;
+}
+
 let config = {
-    mode: "production",
-    entry: addEntries(),
+    mode: "development",
+    entry: {
+        "ffpage": path.resolve(__dirname, "../template/ffpage/index.js")
+    },
     output: {
         filename: "[name]/[name].js",
-        path: path.resolve(__dirname, "../dist/template/")
+        path: path.resolve(__dirname, "../dist/template"),
+        publicPath: "/"
     },
     module: {
         rules: [
@@ -79,22 +93,28 @@ let config = {
         new webpack.ProvidePlugin({
             'Promise': 'bluebird'
         }),
-        new webpack.HotModuleReplacementPlugin(),
-        new ProgressBarPlugin()
+        new ProgressBarPlugin(),
+        new HtmlWebpackPlugin({
+            title: "ff project",
+            filename: "ffpage/index.html",
+            template: "./index.tpl.html",
+            chunks: ["ffpage"]
+        })
     ],
     resolve: {
         extensions: ['.js', '.vue']
     }
 };
 
-getEntries().forEach(pathname => {
-    let conf = {
-        title: "ff project",
-        filename: path.join(pathname, "index") + ".html",
-        template: path.resolve(__dirname, "../index.html"),
-        chunks: [pathname]
-    };
-    config.plugins.push(new HtmlWebpackPlugin(conf));
-});
+// getEntries().forEach(pathname => {
+//     let conf = {
+//         title: "ff project",
+//         filename: "index.html",
+//         template: path.resolve(__dirname, "../index.html"),
+//         chunks: [pathname]
+//     };
+//     config.plugins.push(new HtmlWebpackPlugin(conf));
+// });
+
 
 module.exports = config;

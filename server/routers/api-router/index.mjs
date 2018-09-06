@@ -4,7 +4,7 @@ const router = new Router();
 
 router.get("/",async (ctx, next) => {
     ctx.body = "hello world";
-    next();
+    return await ctx.render("ffpage/index");
 });
 
 export default router;

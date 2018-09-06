@@ -16,10 +16,9 @@ app.use(logger());
 
 app.use(bodyParser());
 
-webpackServe({},{config: webpackConfig});
-
 app.use(resource);
 app.use(views(path.resolve(__dirname, "../dist/template"), {map: {html: "ejs"}}));
+webpackServe({},{config: webpackConfig});
 app.use(routers);
 
 
@@ -29,4 +28,4 @@ app.on('error', function(err, ctx){
 
 
 
-app.listen(8090, () => {console.log("已开启8090端口")})
+app.listen(8080, () => {console.log("已开启8080端口")})

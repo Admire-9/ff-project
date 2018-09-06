@@ -33,7 +33,7 @@ let config = {
     entry: addEntries(),
     output: {
         filename: "[name]/[name].js",
-        path: path.resolve(__dirname, "../dist/template/"),
+        path: path.resolve(__dirname, "../dist/template"),
         publicPath: "/"
     },
     module: {
@@ -85,26 +85,36 @@ let config = {
         new ProgressBarPlugin()
     ],
     resolve: {
-        extensions: ['.js', '.vue']
+        extensions: ['.js', '.vue', '.less', '.css']
     },
     serve: {
-        content: [path.resolve(__dirname, "../dist/template")],
+        content: addServeContent(),
         add: (app) => {
-            app.use(convert(proxy('/', { target: 'http://localhost:8090' })));
+            app.use(convert(proxy('/api', { target: 'http://localhost:8080' })));
         },
         hotClient: true,
         port: "3002"
     }
 };
 
+function addServeContent() {
+    let content = [];
+    getEntries().forEach(item => {
+        content.push(path.resolve(__dirname, "../dist/template", item));
+    });
+    return content;
+}
+
+
 getEntries().forEach(pathname => {
     let conf = {
         title: "ff project",
-        filename: path.join(pathname, "index") + ".html",
-        template: path.resolve(__dirname, "../index.html"),
+        filename: pathname+"/index.html",
+        template: path.resolve(__dirname, "../index.tpl.html"),
         chunks: [pathname]
     };
     config.plugins.push(new HtmlWebpackPlugin(conf));
 });
+
 
 module.exports = config;
