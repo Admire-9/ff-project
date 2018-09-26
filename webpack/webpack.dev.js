@@ -85,12 +85,12 @@ let config = {
         new ProgressBarPlugin()
     ],
     resolve: {
-        extensions: ['.js', '.vue', '.less', '.css']
+        extensions: ['.js', '.vue', '.less', '.css', '.less', 'json', '.msj', '.dev.js', '.prod.js']
     },
     serve: {
         content: addServeContent(),
         add: (app) => {
-            app.use(convert(proxy('/api', { target: 'http://localhost:8080' })));
+            app.use(convert(proxy('/api', { target: 'http://localhost:3003' })));
         },
         hotClient: true,
         port: "3002"

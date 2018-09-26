@@ -6,6 +6,7 @@ import api from './api-router';
 
 const router = new Router();
 
+
 router.use("/", view.routes(), api.allowedMethods());
 router.use("/api", api.routes(), api.allowedMethods());
 
