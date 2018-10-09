@@ -14,8 +14,7 @@ const resolvers = {
         },
         article: async(root, args, context) => {
             let result = await sqlBehavior.findArticle(args.id);
-            console.log(result, "result");
-            return [{id: 1, title: 'test', time: '2018-08-12', mkcontent: '这里是mk'}]
+            return result;
         }
     },
     Mutation: { // 对应到typeDefs中的 Mutation

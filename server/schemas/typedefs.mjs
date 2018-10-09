@@ -13,7 +13,7 @@ const typeDefs = gql`
     }
     type Query {
         users: [User],
-        article: [Article]
+        article(id: Int!): [Article]
     }
     type Mutation {
         addUser(name:String!):User

@@ -9,8 +9,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const getEntries = function() {
-    let globPath = "template/**/*.vue";
-    let pathDir = "template(\/|\\\\)(.*?)";
+    let globPath = "src/**/*.vue";
+    let pathDir = "src(\/|\\\\)(.*?)";
     let files = glob.sync(globPath);
     let dirname, entries = [];
     for(let i = 0; i < files.length; i++) {
@@ -23,7 +23,7 @@ const getEntries = function() {
 function addEntries() {
     let entryObj = {};
     getEntries().forEach(item => {
-        entryObj[item] = path.resolve(__dirname, "../template", item, "index.js");
+        entryObj[item] = path.resolve(__dirname, "../src", item, "index.js");
     });
     return entryObj;
 }
@@ -33,7 +33,7 @@ let config = {
     entry: addEntries(),
     output: {
         filename: "[name]/[name].js",
-        path: path.resolve(__dirname, "../dist/template"),
+        path: path.resolve(__dirname, "../dist/src"),
         publicPath: "/"
     },
     module: {
@@ -41,6 +41,14 @@ let config = {
             {
                 test: /\.vue$/,
                 loader: "vue-loader"
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: 'file-loader',
+                options: { name: '[name].[ext]?[hash]' }
+            },
+            {   test: /\.(woff|ttf|eot|svg)/, 
+                loader: 'file-loader?name=font/[name].[ext]&publicPath=../' 
             },
             {
                 test: /\.(le|c)ss$/,
@@ -54,7 +62,11 @@ let config = {
                         ]
                       }
                     },
-                    "less-loader"
+                    { loader: "less-loader", options: {
+                        paths: [
+                            path.resolve(__dirname, 'node_modules')
+                        ]
+                    }}
                 ]
             },
             {
@@ -91,6 +103,7 @@ let config = {
         content: addServeContent(),
         add: (app) => {
             app.use(convert(proxy('/api', { target: 'http://localhost:3003' })));
+            app.use(convert(proxy('/lib', { target: 'http://localhost:3003' })));
         },
         hotClient: true,
         port: "3002"
@@ -100,7 +113,7 @@ let config = {
 function addServeContent() {
     let content = [];
     getEntries().forEach(item => {
-        content.push(path.resolve(__dirname, "../dist/template", item));
+        content.push(path.resolve(__dirname, "../dist/src", item));
     });
     return content;
 }
@@ -110,7 +123,7 @@ getEntries().forEach(pathname => {
     let conf = {
         title: "ff project",
         filename: pathname+"/index.html",
-        template: path.resolve(__dirname, "../index.tpl.html"),
+        template: path.resolve(__dirname, `../src/${pathname}/index.tpl.html`),
         chunks: [pathname]
     };
     config.plugins.push(new HtmlWebpackPlugin(conf));

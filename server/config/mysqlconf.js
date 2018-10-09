@@ -1,7 +1,7 @@
 const mysqlconf = {
-    DATABASE: 'ffproject',
+    DATABASE: 'blog',
     USERNAME: 'root',
-    PASSWORD: '123456',
+    PASSWORD: '12345678',
     PORT: '3306',
     HOST: 'localhost'
 };

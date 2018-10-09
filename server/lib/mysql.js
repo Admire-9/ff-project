@@ -17,6 +17,7 @@ let query = ( sql, values ) => {
             } else {
                 connection.query(sql, values, ( err, rows) => {
                     if ( err ) {
+                        console.log(err, "err");
                         reject( err )
                     } else {
                         resolve( rows )
@@ -43,7 +44,8 @@ let article =
 
 const sqlBehavior = {
     findArticle: id => {
-        let _sql = `select * frome article where id=${id}`;
+        let _sql = id ? `select * from article where id=${id}` : `select * from article`;
+        console.log(_sql, "_sql");
         return query(_sql);
     }
 }

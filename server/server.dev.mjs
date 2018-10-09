@@ -9,15 +9,16 @@ import routers from './routers';
 import apolloServer from './schemas';
 const webpackConfig = require("../webpack/webpack.dev");
 const app = new Koa();
-const resource = serve(path.join(__dirname, "../dist/template"));
-
+const resourceView = serve(path.join(__dirname, "../dist/src"));
+const resouceLib = serve(path.join(__dirname, "../"));
 // Logger
 app.use(logger());
 
 app.use(bodyParser());
 
-app.use(resource);
-app.use(views(path.resolve(__dirname, "../dist/template"), {map: {html: "ejs"}}));
+app.use(resourceView);
+app.use(resouceLib);
+app.use(views(path.resolve(__dirname, "../dist/src"), {map: {html: "ejs"}}));
 webpackServe({},{config: webpackConfig});
 apolloServer.applyMiddleware({ app });
 app.use(routers);
