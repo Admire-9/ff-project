@@ -1,4 +1,4 @@
-import './less/article.less'
+import './less/article-list.less'
 import Vue from 'vue';
 import App from './index.vue';
 new Vue({
