@@ -9,8 +9,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const getEntries = function() {
-    let globPath = "src/**/*.vue";
-    let pathDir = "src(\/|\\\\)(.*?)";
+    let globPath = "client/src/**/*.vue";
+    let pathDir = "client/src(\/|\\\\)(.*?)";
     let files = glob.sync(globPath);
     let dirname, entries = [];
     for(let i = 0; i < files.length; i++) {
@@ -23,7 +23,7 @@ const getEntries = function() {
 function addEntries() {
     let entryObj = {};
     getEntries().forEach(item => {
-        entryObj[item] = path.resolve(__dirname, "../src", item, "index.js");
+        entryObj[item] = path.resolve(__dirname, "../client/src", item, "index.js");
     });
     return entryObj;
 }
@@ -97,7 +97,10 @@ let config = {
         new ProgressBarPlugin()
     ],
     resolve: {
-        extensions: ['.js', '.vue', '.less', '.css', '.less', 'json', '.msj', '.dev.js', '.prod.js']
+        extensions: ['.js', '.vue', '.less', '.css', '.less', 'json', '.msj', '.dev.js', '.prod.js'],
+        alias: {
+            "@": path.resolve(__dirname, "../")
+        }
     },
     serve: {
         content: addServeContent(),
@@ -123,11 +126,10 @@ getEntries().forEach(pathname => {
     let conf = {
         title: "ff project",
         filename: pathname+"/index.html",
-        template: path.resolve(__dirname, `../src/${pathname}/index.tpl.html`),
+        template: path.resolve(__dirname, `../client/src/${pathname}/index.tpl.html`),
         chunks: [pathname]
     };
     config.plugins.push(new HtmlWebpackPlugin(conf));
 });
-
 
 module.exports = config;

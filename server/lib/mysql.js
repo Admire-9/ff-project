@@ -1,5 +1,6 @@
 import mysqlconf from '../config/mysqlconf';
 import mysql from 'mysql';
+import { isEmptyObject, sqlParamsAdd, updateParamsAdd, insertParamsAdd } from '../../tool'
 
 const pool = mysql.createPool({
     host: mysqlconf.HOST,
@@ -43,8 +44,30 @@ let article =
       );`;
 
 const sqlBehavior = {
-    findArticle: id => {
-        let _sql = id ? `select * from article where id=${id}` : `select * from article`;
+    findArticle: args => {
+        let _sql = "";
+        if(args === undefined || isEmptyObject(args)){
+            _sql = `select * from article`;
+        }else{
+            _sql = `select * from article where ${sqlParamsAdd(args)}`;
+        }
+        return query(_sql);
+    },
+    updateArticle: (id, articleInput, type) => {
+        let _sql = "";
+        let {title, time, mkcontent, tag, sort, overview} = articleInput;
+        let params = {title, time, mkcontent, tag, sort, overview};
+        if(type === "update") {
+            _sql = `update article set ${updateParamsAdd(articleInput)} where id=${id}`;
+        }else {
+            _sql = `insert into article values('${id}', ${insertParamsAdd(params)})`;
+        }
+        console.log(_sql, "_sql");
+        return query(_sql);
+    },
+    delArticle: (id) => {
+        let _sql = "";
+        _sql = `DELETE FROM article WHERE id='${id}'`;
         console.log(_sql, "_sql");
         return query(_sql);
     }
