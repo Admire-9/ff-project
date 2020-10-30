@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development nodemon server",
-    "build": "cross-env NODE_ENV=development webpack --env=dev"
+    "build": "cross-env NODE_ENV=product webpack --env=dev"
   },
   "keywords": [
     "ff"
